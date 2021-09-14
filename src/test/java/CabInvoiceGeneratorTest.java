@@ -2,13 +2,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.lang.reflect.Array;
+import java.util.*;
+
 public class CabInvoiceGeneratorTest {
-//    CabInvoice cabinvoice=null;
-//    @Before
-//    public void setUp() throws Exception
-//    {
-//        CabInvoice cabinvoice=new CabInvoice();
-//    }
+
     @Test
     public void CalculateFare_WhenGiven_DistanceAndTime() {
        CabInvoice cabinvoice=new CabInvoice();
@@ -30,10 +28,14 @@ public class CabInvoiceGeneratorTest {
     @Test
     public void givenMultipleRides_ShouldReturnInvoiceSummary() {
       CabInvoice cabinvoice=new CabInvoice();
-        Rides[] ride={new Rides(2.0,5),new Rides(0.1,1)
-        };
-        InvoiceSummary fare=cabinvoice.calculateFare(ride);
-        InvoiceSummary expectedInvoiceSummary=new InvoiceSummary(2,30);
-        Assert.assertEquals(expectedInvoiceSummary,fare);
+        HashMap<Integer,InvoiceSummary> multipleUsers=new HashMap<Integer, InvoiceSummary>();
+
+        Rides[] ride1={new Rides(1,2.0,5),new Rides(1,0.1,1)};
+        Rides[] ride2={new Rides(2,4,6),new Rides(2,2,3),new Rides(2,5,6)};
+        InvoiceSummary fare1=cabinvoice.calculateFare(ride1);
+        Assert.assertEquals("InvoiceSummary{noOfRides=2, totalFare=30.0, averageFare=15.0}",cabinvoice.findFareOfGivenId(1));
+        InvoiceSummary fare2=cabinvoice.calculateFare(ride2);
+       Assert.assertEquals("InvoiceSummary{noOfRides=3, totalFare=125.0, averageFare=41.666666666666664}",cabinvoice.findFareOfGivenId(2));
+
     }
 }
